@@ -107,5 +107,24 @@ public class ClubDao {
 		return information;
 	}
 
+	public static List expectedValue(int value)
+	{
+		List club= new ArrayList();
+		try {
+			String query="SELECT club_name from club\n" +
+					"where club.club_id\n" +
+					"IN(SELECT clubID from player WHERE market_value >=?);";
+			PreparedStatement statement=connectionWithDateBase.prepareStatement(query);
+			statement.setInt(1, value);
+			ResultSet result=statement.executeQuery();
+			while(result.next()) {
+				club.add(result.getString(1));
 
+			}
+
+		}catch(SQLException sqlexc) {
+			System.out.println(sqlexc.getMessage());
+		}
+		return club;
+	}
 }
