@@ -80,4 +80,32 @@ public class ClubDao {
 		}
 		return wartosc;
 	}
+
+	public static List informationAboutClub(String club_name)
+	{
+		List information= new ArrayList();
+		try {
+			String query="select club_name,city,dateOfFounding, name_stadium,capacity, SUM(market_value) AS team_value FROM club\n" +
+					"left join stadium on club.club_id=stadium.clubID\n" +
+					"left join player on club.club_id=player.clubID\n" +
+					"where club.club_name=?";
+			PreparedStatement statement=connectionWithDateBase.prepareStatement(query);
+			statement.setString(1, club_name);
+			ResultSet result=statement.executeQuery();
+			while(result.next()) {
+				information.add(result.getString(1));
+				information.add(result.getString(2));
+				information.add(result.getDate(3));
+				information.add(result.getString(4));
+				information.add(result.getInt(5));
+				information.add(result.getInt(6));
+			}
+			System.out.println(information);
+		}catch(SQLException sqlexc) {
+			System.out.println(sqlexc.getMessage());
+		}
+		return information;
+	}
+
+
 }

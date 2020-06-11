@@ -85,4 +85,52 @@ public class PlayerDao {
 		}
 		return players;
 	}
+
+	public static void findfLeftPlayer()
+	{
+		//String[][] tablica = new String[53][1];
+		String[] tabS= new String[51];
+		int[] tabI= new int[51];
+		int i=0;
+		int n=0;
+		try {
+			String query="Select club_name, COUNT(player_id) from player\n" +
+					"inner JOIN club on player.clubID=club.club_id\n" +
+					"where player.foot ='left'\n" +
+					"GROUP BY clubID;";
+			PreparedStatement statement=connectionWithDateBase.prepareStatement(query);
+			//statement.setString(1, club_name);
+			ResultSet result=statement.executeQuery();
+			while(result.next()) {
+
+				//tablica[i][n]=result.getString(1);
+				tabS[n]=result.getString(1);
+				tabI[n]=result.getInt(2);
+				n++;
+				//tablica[i][n]=result.getString(2);
+				//i++;
+				//n=0;
+			}
+		}catch(SQLException sqlexc) {
+			System.out.println(sqlexc.getMessage());
+		}
+	}
+
+	public static double ageAverage(String club_name) {
+		double average=0;
+		try {
+			String query="SELECT AVG(DateDiff(now(),born_date)/365) as average from player\n" +
+					"inner JOIN club on player.clubID=club.club_id\n" +
+					"WHERE club_name=?";
+			PreparedStatement statement=connectionWithDateBase.prepareStatement(query);
+			statement.setString(1, club_name);
+			ResultSet result=statement.executeQuery();
+			if(result.next()) {
+				average=result.getDouble(1);
+			}
+		}catch(SQLException sqlexc) {
+			System.out.println(sqlexc.getMessage());
+		}
+		return average;
+	}
 }
