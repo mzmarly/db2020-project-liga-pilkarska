@@ -155,7 +155,9 @@ where not exists
 11.Wyszukiwanie konkretnej ligi
 
 ```sql
-select * from football_leagues.leagues where name_league=?;
+select size_league,name_league,country.country_name from football_leagues.leagues  
+left join football_leagues.country on leagues.countryID=country.country_id 
+where name_league=?;
 ```
 
 11.Dodawanie ligi
@@ -188,7 +190,16 @@ where not exists
 LIMIT 1;
 ```
 
-15.Wyświetlanie najdroższych piłkarzy w klubie
+15.Aktualizowanie danych piłkarza
+
+```sql
+update football_leagues.player set first_name=?,surname=?,born_date=?,
+clubID=(select club_id from football_leagues.club where club_name=?),
+countryID=(select country_id from football_leagues.country where country_name=?),position=?,foot=?,market_value=? 
+where first_name=? and surname=? and position=?;
+```
+
+16.Wyświetlanie najdroższych piłkarzy w klubie
 
 ```sql
 select * from football_leagues.player 
@@ -196,26 +207,35 @@ where clubID=(select club_id from football_leagues.club where club_name=?)
 order by market_value desc limit 5;
 ```
 
-16.Obliczanie ilu jest piłkarzy prawo/lewo nożnych
+16.Wyświetlanie klubów z największą liczbą lewo/prawo nożnych piłkarzy
 
 ```sql
 Select club_name, COUNT(player_id) as number from player inner JOIN club on player.clubID=club.club_id 
 where player.foot =? GROUP BY clubID order by number desc limit 5;
 ```
 
-17.Wyszukiwanie stadionu ze względu na nazwę
+17.Usuwanie konkretnego piłkarza
 
 ```sql
-select * from football_leagues.stadium where name_stadium=?;
+delete from football_leagues.player where first_name=? and surname=? and position=?;
 ```
 
-18.Średnia pojemność stadionów
+
+18.Wyszukiwanie stadionu ze względu na nazwę
+
+```sql
+select name_stadium,address,dateOfBuilt,club.club_name,capacity from football_leagues.stadium 
+left join football_leagues.club on club.club_id=stadium.clubID 
+where name_stadium=?;
+```
+
+19.Średnia pojemność stadionów
 
 ```sql
 select AVG(capacity) from football_leagues.stadium ;
 ```
 
-19.Dodawanie nowego stadionu
+20.Dodawanie nowego stadionu
 
 ```sql
 insert into football_leagues.stadium (stadium_id,name_stadium,address,dateOfBuilt,clubID,capacity) 
@@ -223,6 +243,15 @@ select * from (select null,?,?,?,?,?)as tmp
 where not exists (select name_stadium from football_leagues.stadium where name_stadium=?) 
 LIMIT 1;
 ```
+
+21.Usuwanie stadionu
+
+```sql
+delete from football_leagues.stadium where name_stadium=?;
+```
+
+
+20.
 ## Aplikacja
 Tutaj należy opisać aplikację, która wykorzystuje zapytania SQL z poprzedniego kroku. Można, jednak nie jest to konieczne, wrzucić tutaj istotne snippety z Waszych aplikacji.
 
