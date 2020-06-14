@@ -253,7 +253,14 @@ delete from football_leagues.stadium where name_stadium=?;
 
 20.
 ## Aplikacja
-Tutaj należy opisać aplikację, która wykorzystuje zapytania SQL z poprzedniego kroku. Można, jednak nie jest to konieczne, wrzucić tutaj istotne snippety z Waszych aplikacji.
+Aplikacja napisana w języku programowania Java, oparta na Mavenie. 
+Połączenie z bazą danych realizowane przez sterownik mysql-connector.
+Baza danych utrzymwywana w mysql workbench. Gui aplikacji napisane z wykorzystaniem Swinga.
 
+![diagram-baza](ekran_głowny.jpg)
+
+![diagram-baza](funkcje.jpg)
+
+![diagram-baza](dzialanie_funkcji.jpg)
 ## Dodatkowe uwagi
 W tej sekcji możecie zawrzeć informacje, których nie jesteście w stanie przypisać do pozostałych. Mogą to być również jakieś komentarze, wolne uwagi, itp.
