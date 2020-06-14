@@ -13,7 +13,7 @@ Baza danych składa się z 3 lig piłkarskich, 58 klubów oraz 754 prawdiwych pr
 
 Diagram składa się z 5 encji:
 
-```
+```sql
 create table country(
     country_id int not null auto_increment primary key,
     country_name varchar(25) not null
@@ -84,45 +84,51 @@ select * from football_leagues.club where club_name=?;
 2. Dodawanie nowego klubu
 
 ```sql
-insert into football_leagues.club (club_id,club_name,city,dateOfFounding,leagueID) select * from (select null,?,?,?,?)as tmp where not exists (select club_name from football_leagues.club where club_name=?) LIMIT 1;
+insert into football_leagues.club (club_id,club_name,city,dateOfFounding,leagueID) 
+select * from (select null,?,?,?,?)as tmp
+where not exists (select club_name from football_leagues.club where club_name=?) 
+LIMIT 1;
 ```
 
 3.Obliczanie wartości piłkarzy konkretnego klubu
 
 ```sql
-select  SUM(market_value) from football_leagues.player where clubID=(select club_id from football_leagues.club where club_name=?);
+select SUM(market_value) from football_leagues.player 
+where clubID=(select club_id from football_leagues.club where club_name=?);
 ```
 
 4. Kompletna informacja o wskazanym klubie
 
 ```sql
-select club_name,city,dateOfFounding, name_stadium,capacity,name_league,SUM(market_value) AS team_value FROM club \r\n" + 
-					"left join stadium on club.club_id=stadium.clubID \r\n" + 
-					"left join player on club.club_id=player.clubID \r\n" + 
-					"left join leagues on club.leagueID=leagues.leagues_id \r\n" + 
-					"where club.club_name=?"
+select club_name,city,dateOfFounding, name_stadium,capacity,name_league,SUM(market_value) AS team_value FROM club  
+					left join stadium on club.club_id=stadium.clubID 
+					left join player on club.club_id=player.clubID
+					left join leagues on club.leagueID=leagues.leagues_id
+					where club.club_name=?;
 ```
 
 5.Wyświetlanie wszystkich klubów którzy mają co najmniej jednego zawodnika o podanej wartości
 
 ```sql
-SELECT club_name from club\n" +
-					"where club.club_id\n" +
-					"IN(SELECT clubID from player WHERE market_value >=?) order by ;
+SELECT club_name from club where club.club_id
+IN(SELECT clubID from player WHERE market_value >=?) order by ;
 ```
 
 6.Średni wiek piłkarzy w danym klubie
 
 ```sql
-SELECT AVG(DateDiff(now(),born_date)/365) as average from player\n" +
-					"inner JOIN club on player.clubID=club.club_id\n" +
-					"WHERE club_name=?";
+SELECT AVG(DateDiff(now(),born_date)/365) as average from player
+					inner JOIN club on player.clubID=club.club_id\n
+					WHERE club_name=?;
 ```
 
 7.Dodawanie nowego kraju do bazy danych
 
 ```sql
-insert into football_leagues.country (country_id,country_name) select * from (select null,?)as tmp where not exists (select country_name from football_leagues.country where country_name=?) LIMIT 1;
+insert into football_leagues.country (country_id,country_name) 
+select * from (select null,?)as tmp 
+where not exists (select country_name from football_leagues.country where country_name=?) 
+LIMIT 1;
 ```
 
 8.Wyszukiwanie pracownika po nazwisku
@@ -175,15 +181,18 @@ select * from football_leagues.player where surname=?;
 
 14.Dodawanie piłkarza do bazy danych
 ```sql
-insert into football_leagues.player (player_id,first_name,surname,born_date,clubID,countryID,position,foot,market_value) select * from (select null,?,?,?,?,?,?,?,?)as tmp 
+insert into football_leagues.player (player_id,first_name,surname,born_date,clubID,countryID,position,foot,market_value) 
+select * from (select null,?,?,?,?,?,?,?,?)as tmp 
 where not exists 
-(select first_name,surname,clubID from football_leagues.player where first_name=? and surname=? and clubID=?) LIMIT 1;
+(select first_name,surname,clubID from football_leagues.player where first_name=? and surname=? and clubID=?) 
+LIMIT 1;
 ```
 
 15.Wyświetlanie najdroższych piłkarzy w klubie
 
 ```sql
-select * from football_leagues.player where clubID=(select club_id from football_leagues.club where club_name=?) 
+select * from football_leagues.player 
+where clubID=(select club_id from football_leagues.club where club_name=?) 
 order by market_value desc limit 5;
 ```
 
