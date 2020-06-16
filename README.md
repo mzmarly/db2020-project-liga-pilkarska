@@ -9,7 +9,7 @@ Baza danych składa się z 3 lig piłkarskich, 58 klubów oraz 754 prawdiwych pr
 | Michał Zmarły       | WIMiIP  | IS       |   4     | 4     | 2019/2020      |
 
 ## Projekt bazy danych
-![diagram-baza](baza.jpg)
+![screenshot](/resources/baza.jpg)
 
 Diagram składa się z 5 encji:
 
@@ -257,10 +257,10 @@ Aplikacja napisana w języku programowania Java, oparta na Mavenie.
 Połączenie z bazą danych realizowane przez sterownik mysql-connector.
 Baza danych utrzymwywana w mysql workbench. Gui aplikacji napisane z wykorzystaniem Swinga.
 
-![sources](ekran_głowny.jpg)
+![screenshot](/resources/ekran_głowny.jpg)
 
-![sources](funkcje.jpg)
+![screenshot](/resources/funkcje.jpg)
 
-![sources](dzialanie_funkcji.jpg)
+![screenshot](/resources/dzialanie_funkcji.jpg)
 ## Dodatkowe uwagi
 W tej sekcji możecie zawrzeć informacje, których nie jesteście w stanie przypisać do pozostałych. Mogą to być również jakieś komentarze, wolne uwagi, itp.
