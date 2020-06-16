@@ -257,10 +257,10 @@ Aplikacja napisana w języku programowania Java, oparta na Mavenie.
 Połączenie z bazą danych realizowane przez sterownik mysql-connector.
 Baza danych utrzymwywana w mysql workbench. Gui aplikacji napisane z wykorzystaniem Swinga.
 
-![diagram-baza](ekran_głowny.jpg)
+![sources](ekran_głowny.jpg)
 
-![diagram-baza](funkcje.jpg)
+![sources](funkcje.jpg)
 
-![diagram-baza](dzialanie_funkcji.jpg)
+![sources](dzialanie_funkcji.jpg)
 ## Dodatkowe uwagi
 W tej sekcji możecie zawrzeć informacje, których nie jesteście w stanie przypisać do pozostałych. Mogą to być również jakieś komentarze, wolne uwagi, itp.
